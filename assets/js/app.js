@@ -3,10 +3,10 @@ var svgHeight = 500;
 var svgWidth = 800;
 
 var margin = {
-    top: 20,
-    right: 40,
-    bottom: 60,
-    left: 50
+    top: 30,
+    right: 20,
+    bottom: 70,
+    left: 100
 };
 
 var chartWidth = svgWidth - margin.left - margin.right;
@@ -56,6 +56,16 @@ d3.csv("assets/data/data.csv").then(function(dabblerData){
         .attr("fill", "blue")
         .attr("opacity", ".5");
 
+    chartGroup.selectAll("stateText")
+        .data(dabblerData)
+        .enter()
+        .append("text")
+        .text(d => d.abbr)
+        .attr("class", "stateTxt")
+        .attr("dx", d => xLinearScale(d.obesity)-5)
+        .attr("dy", d => yLinearScale(d.poverty)+5)
+        .attr("font-size", 9)
+
     var toolTip = d3.tip()
         .attr("class", "tooltip")
         .offset([80, -60])
@@ -73,15 +83,15 @@ d3.csv("assets/data/data.csv").then(function(dabblerData){
     });
 
     chartGroup.append("text")
-        .attr("tansform", "rotate(-90)")
-        .attr("y", 0 - margin.left + 40)
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 30)
         .attr("x", 0 - (chartHeight / 2))
         .attr("dy", "1em")
         .attr("class", "axisText")
         .text("Poverty");
 
     chartGroup.append("text")
-    .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.top + 30})`)
+    .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.top + 20})`)
     .attr("class", "axisText")
     .text("Obesity");
 }).catch(function(error) {
